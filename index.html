@@ -240,9 +240,11 @@
                 <h2 class="section-title">学术成果</h2>
                 
                 <h3 class="subsection-title">竞赛获奖</h3>
-                <div class="award-item">
-                    <span class="award-year">2023</span>
-                    <span class="award-text">第二届全国研究生金融科技创新大赛 · 一等奖</span>
+                <div class="award-list">
+                    <div class="award-item">
+                        <span class="award-year">2023</span>
+                        <span class="award-text">第二届全国研究生金融科技创新大赛 · 一等奖</span>
+                    </div>
                 </div>
 
                 <h3 class="subsection-title">发明专利</h3>
@@ -322,6 +324,7 @@
         // ===== 飘动粒子动画 =====
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
+        let mouseX = 0, mouseY = 0;
         
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -329,6 +332,12 @@
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+        
+        // 鼠标跟踪
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY + window.scrollY;
+        });
         
         // 粒子类
         class Particle {
@@ -339,24 +348,45 @@
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 4 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.8;
-                this.speedY = (Math.random() - 0.5) * 0.8;
-                this.opacity = Math.random() * 0.5 + 0.2;
-                this.hue = 210 + Math.random() * 30; // 蓝色色调
+                this.size = Math.random() * 5 + 2;
+                this.baseSize = this.size;
+                this.speedX = (Math.random() - 0.5) * 1.2;
+                this.speedY = (Math.random() - 0.5) * 1.2;
+                this.opacity = Math.random() * 0.6 + 0.3;
+                this.hue = 200 + Math.random() * 60; // 蓝紫色调
+                this.pulse = Math.random() * Math.PI * 2;
+                this.pulseSpeed = 0.02 + Math.random() * 0.03;
             }
             
             update() {
+                // 脉动效果
+                this.pulse += this.pulseSpeed;
+                this.size = this.baseSize + Math.sin(this.pulse) * 1.5;
+                
                 this.x += this.speedX;
                 this.y += this.speedY;
                 
+                // 鼠标交互 - 粒子被鼠标吸引
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 200) {
+                    const force = (200 - dist) / 200 * 0.03;
+                    this.speedX += dx * force * 0.01;
+                    this.speedY += dy * force * 0.01;
+                }
+                
                 // 轻微的浮动效果
-                this.speedX += (Math.random() - 0.5) * 0.02;
-                this.speedY += (Math.random() - 0.5) * 0.02;
+                this.speedX += (Math.random() - 0.5) * 0.03;
+                this.speedY += (Math.random() - 0.5) * 0.03;
                 
                 // 限制速度
-                this.speedX = Math.max(-1, Math.min(1, this.speedX));
-                this.speedY = Math.max(-1, Math.min(1, this.speedY));
+                this.speedX = Math.max(-1.5, Math.min(1.5, this.speedX));
+                this.speedY = Math.max(-1.5, Math.min(1.5, this.speedY));
+                
+                // 阻尼
+                this.speedX *= 0.99;
+                this.speedY *= 0.99;
                 
                 // 边界处理 - 从另一边出现
                 if (this.x < -10) this.x = canvas.width + 10;
@@ -366,22 +396,31 @@
             }
             
             draw() {
+                // 外层光晕
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size * 4
+                );
+                gradient.addColorStop(0, `hsla(${this.hue}, 80%, 65%, ${this.opacity})`);
+                gradient.addColorStop(0.4, `hsla(${this.hue}, 70%, 55%, ${this.opacity * 0.5})`);
+                gradient.addColorStop(1, `hsla(${this.hue}, 60%, 50%, 0)`);
+                
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, ${this.opacity})`;
+                ctx.arc(this.x, this.y, this.size * 4, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
                 ctx.fill();
                 
-                // 发光效果
+                // 核心粒子
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, ${this.opacity * 0.3})`;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 90%, 75%, ${this.opacity + 0.2})`;
                 ctx.fill();
             }
         }
         
         // 创建粒子
         const particles = [];
-        const particleCount = 80;
+        const particleCount = 100;
         
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle());
@@ -395,11 +434,18 @@
                     const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (dist < 120) {
-                        const opacity = (1 - dist / 120) * 0.15;
+                    if (dist < 150) {
+                        const opacity = (1 - dist / 150) * 0.25;
+                        const gradient = ctx.createLinearGradient(
+                            particles[i].x, particles[i].y,
+                            particles[j].x, particles[j].y
+                        );
+                        gradient.addColorStop(0, `hsla(${particles[i].hue}, 70%, 60%, ${opacity})`);
+                        gradient.addColorStop(1, `hsla(${particles[j].hue}, 70%, 60%, ${opacity})`);
+                        
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`;
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = 1.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();

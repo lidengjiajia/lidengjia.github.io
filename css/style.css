@@ -385,14 +385,15 @@ body {
 .edu-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 14px 18px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    transition: all 0.3s ease;
+    gap: 20px;
+    padding: 20px 28px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 50%, #e8f4ff 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
 }
 
 .edu-item::before {
@@ -402,39 +403,40 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.03), transparent);
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.08), transparent);
     background-size: 200% 100%;
-    animation: shimmer 3s infinite;
+    animation: shimmer 2s infinite;
     pointer-events: none;
 }
 
 .edu-item:hover {
     border-color: #2563eb;
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.15);
-    transform: translateX(4px);
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+    transform: translateY(-4px);
+    background: linear-gradient(135deg, #ffffff 0%, #e8f4ff 50%, #dbeafe 100%);
 }
 
 .edu-logo {
     flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
-    border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s ease;
 }
 
 .edu-item:hover .edu-logo {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .edu-logo img {
-    width: 52px;
-    height: 52px;
+    width: 68px;
+    height: 68px;
     object-fit: contain;
 }
 
@@ -520,27 +522,27 @@ body {
 }
 
 .research-card h4 {
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #2563eb;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #2563eb;
     display: inline-block;
 }
 
 .research-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
 }
 
 .research-tags span {
     background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
     color: #2563eb;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.75rem;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.2s ease;
 }
@@ -679,26 +681,44 @@ body {
 }
 
 /* ===== 成果 ===== */
+.award-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .award-item {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 14px;
-    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
-    border: 1px solid #c7d2fe;
-    padding: 14px 24px;
-    border-radius: 8px;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px 22px;
+    transition: all 0.3s ease;
+}
+
+.award-item:hover {
+    border-color: #2563eb;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
 }
 
 .award-year {
-    font-size: 1.4rem;
+    flex-shrink: 0;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #2563eb;
+    color: #fff;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    padding: 6px 14px;
+    border-radius: 8px;
 }
 
 .award-text {
-    font-size: 0.95rem;
-    color: #1a1a1a;
+    font-size: 0.9rem;
+    color: #333;
     font-weight: 500;
+    line-height: 1.6;
 }
 
 .patent-list {
