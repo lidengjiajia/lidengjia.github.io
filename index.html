@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- 动画背景 -->
+    <canvas id="particles-canvas"></canvas>
+    
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container">
@@ -32,7 +35,7 @@
                 <p class="header-tagline">区块链 · 金融科技 · 大语言模型</p>
                 <div class="header-contact">
                     <span><a href="mailto:lidengjia@hnu.edu.cn">lidengjia@hnu.edu.cn</a></span>
-                    <span><a href="mailto:lidengjia@gmail.com">lidengjia@gmail.com</a></span>
+                    <span><a href="mailto:lidengjiajia@gmail.com">lidengjia@gmail.com</a></span>
                     <span>186 1399 7688</span>
                 </div>
             </div>
@@ -49,7 +52,7 @@
             <div class="container">
                 <h2 class="section-title">关于我</h2>
                 <div class="about-content">
-                    <p>我于2014年进入<strong>湖南大学数学与计量经济学院</strong>学习数学与应用数学专业，2018年获得理学学士学位，导师为王节艳教授。本科期间打下了扎实的数学基础，为后续研究工作奠定了坚实的理论功底。</p>
+                    <p>我于2014年进入<strong>湖南大学数学与计量经济学院</strong>学习数学与应用数学专业，2018年获得理学学士学位，导师为王节艳教授。</p>
                     <p>2018年至2024年，我在<strong>湖南大学工商管理学院</strong>攻读管理科学与工程专业博士学位，导师为陈新教授和马超群教授。目前，我在<strong>中国人民银行清算总中心</strong>和<strong>中国科学院大学经济与管理学院</strong>从事博士后研究工作，导师为乔晗教授，主要研究方向为区块链技术、金融科技、数字人民币以及大语言模型与文本分析。</p>
                 </div>
             </div>
@@ -61,6 +64,9 @@
                 <h2 class="section-title">教育背景</h2>
                 <div class="edu-list">
                     <div class="edu-item">
+                        <div class="edu-logo">
+                            <img src="images/湖南大学.png" alt="湖南大学">
+                        </div>
                         <div class="edu-time">2014 — 2018</div>
                         <div class="edu-detail">
                             <h3>湖南大学</h3>
@@ -70,6 +76,9 @@
                         </div>
                     </div>
                     <div class="edu-item">
+                        <div class="edu-logo">
+                            <img src="images/湖南大学.png" alt="湖南大学">
+                        </div>
                         <div class="edu-time">2018 — 2024</div>
                         <div class="edu-detail">
                             <h3>湖南大学</h3>
@@ -79,6 +88,9 @@
                         </div>
                     </div>
                     <div class="edu-item">
+                        <div class="edu-logo">
+                            <img src="images/中国科学院.png" alt="中国科学院大学">
+                        </div>
                         <div class="edu-time">2024 — 至今</div>
                         <div class="edu-detail">
                             <h3>中国人民银行清算总中心 & 中国科学院大学</h3>
@@ -240,5 +252,108 @@
             <p>© 2026 李登佳 · 最后更新: 2026年1月</p>
         </div>
     </footer>
+
+    <!-- 粒子动画脚本 -->
+    <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        
+        // 粒子配置
+        const particles = [];
+        const particleCount = 60;
+        const connectionDistance = 150;
+        const mouseRadius = 120;
+        
+        let mouse = { x: null, y: null };
+        
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+            
+            update() {
+                // 边界反弹
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                
+                // 鼠标交互
+                if (mouse.x && mouse.y) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouseRadius) {
+                        const force = (mouseRadius - dist) / mouseRadius;
+                        this.vx -= dx * force * 0.01;
+                        this.vy -= dy * force * 0.01;
+                    }
+                }
+                
+                this.x += this.vx;
+                this.y += this.vy;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(37, 99, 235, 0.4)';
+                ctx.fill();
+            }
+        }
+        
+        // 初始化粒子
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < connectionDistance) {
+                        const opacity = 1 - dist / connectionDistance;
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(37, 99, 235, ${opacity * 0.2})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
 </body>
 </html>
