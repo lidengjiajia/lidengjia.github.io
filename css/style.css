@@ -1,4 +1,10 @@
-/* ===== 基础重置 ===== */
+/**
+ * 学术主页样式表
+ * 作者：李登佳
+ * 结构：基础重置 → 布局 → 导航 → 头部 → 各内容区块 → 响应式
+ */
+
+/* ===== 1. 基础重置 ===== */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -18,7 +24,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== 飘动粒子背景 ===== */
+/* ===== 2. 画布动画背景 ===== */
 #particles {
     position: fixed;
     top: 0;
@@ -29,64 +35,7 @@ body {
     pointer-events: none;
 }
 
-/* ===== 两侧装饰动画 ===== */
-.side-decoration {
-    position: fixed;
-    top: 0;
-    width: 3px;
-    height: 100vh;
-    z-index: 1001;
-    pointer-events: none;
-}
-
-.side-decoration.left {
-    left: 0;
-    background: linear-gradient(180deg, 
-        transparent 0%,
-        #2563eb 15%, 
-        #60a5fa 50%, 
-        #2563eb 85%,
-        transparent 100%);
-    background-size: 100% 250%;
-    animation: flowDown 1.5s linear infinite;
-}
-
-.side-decoration.right {
-    right: 0;
-    background: linear-gradient(180deg, 
-        transparent 0%,
-        #2563eb 15%, 
-        #60a5fa 50%, 
-        #2563eb 85%,
-        transparent 100%);
-    background-size: 100% 250%;
-    animation: flowUp 1.5s linear infinite;
-}
-
-/* 添加发光效果 */
-.side-decoration::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: inherit;
-    filter: blur(8px);
-    opacity: 0.7;
-}
-
-@keyframes flowDown {
-    0% { background-position: 0% -50%; }
-    100% { background-position: 0% 150%; }
-}
-
-@keyframes flowUp {
-    0% { background-position: 0% 150%; }
-    100% { background-position: 0% -50%; }
-}
-
-/* ===== 滚动显示动画 ===== */
+/* ===== 3. 滚动显示动画 ===== */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
@@ -98,19 +47,13 @@ body {
     transform: translateY(0);
 }
 
-/* 脉冲动画 */
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-}
-
 /* 闪烁动画 */
 @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
 
-/* ===== 通用容器 ===== */
+/* ===== 4. 通用容器 ===== */
 .container {
     width: 100%;
     max-width: 1100px;
@@ -118,12 +61,12 @@ body {
     padding: 0 32px;
 }
 
-/* ===== 导航栏 ===== */
+/* ===== 5. 导航栏 ===== */
 .navbar {
     position: fixed;
     top: 0;
-    left: 4px;
-    right: 4px;
+    left: 0;
+    right: 0;
     height: 56px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -197,12 +140,10 @@ body {
     width: 100%;
 }
 
-/* ===== 头部区域 ===== */
+/* ===== 6. 头部区域 ===== */
 .header {
     padding: 100px 0 60px;
     background: transparent;
-    margin-left: 4px;
-    margin-right: 4px;
 }
 
 .header-content {
@@ -315,11 +256,9 @@ body {
     transform: scale(1.03);
 }
 
-/* ===== 通用 Section ===== */
+/* ===== 7. 通用 Section ===== */
 .section {
     padding: 40px 0;
-    margin-left: 4px;
-    margin-right: 4px;
 }
 
 .section-alt {
@@ -360,7 +299,7 @@ body {
     margin-top: 0;
 }
 
-/* ===== 关于我 ===== */
+/* ===== 8. 关于我 ===== */
 .about-content p {
     font-size: 0.95rem;
     color: #444;
@@ -376,7 +315,7 @@ body {
     color: #1a1a1a;
 }
 
-/* ===== 教育背景 ===== */
+/* ===== 9. 教育背景 ===== */
 .edu-list {
     display: flex;
     flex-direction: column;
@@ -487,7 +426,7 @@ body {
     color: #888;
 }
 
-/* ===== 研究方向 ===== */
+/* ===== 10. 研究方向 ===== */
 .research-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -557,7 +496,7 @@ body {
     transform: scale(1.05);
 }
 
-/* ===== 论文列表 ===== */
+/* ===== 11. 论文列表 ===== */
 .pub-list {
     list-style: none;
     display: flex;
@@ -615,7 +554,7 @@ body {
     font-weight: 500;
 }
 
-/* ===== 项目 ===== */
+/* ===== 12. 项目 ===== */
 .project-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -677,7 +616,7 @@ body {
     color: #888;
 }
 
-/* ===== 成果 ===== */
+/* ===== 13. 成果 ===== */
 .award-list {
     display: flex;
     flex-direction: column;
@@ -768,13 +707,11 @@ body {
     margin-left: 8px;
 }
 
-/* ===== 页脚 ===== */
+/* ===== 14. 页脚 ===== */
 .footer {
     padding: 36px 0;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     text-align: center;
-    margin-left: 6px;
-    margin-right: 6px;
 }
 
 .footer p {
@@ -782,7 +719,7 @@ body {
     font-size: 0.85rem;
 }
 
-/* ===== 响应式设计 ===== */
+/* ===== 15. 响应式设计 ===== */
 @media (max-width: 768px) {
     .container {
         padding: 0 20px;
