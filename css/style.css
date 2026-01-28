@@ -146,11 +146,12 @@ body {
 }
 
 .nav-brand {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: #1a1a1a;
     text-decoration: none;
     transition: all 0.3s ease;
+    letter-spacing: 1px;
 }
 
 .nav-brand:hover {
@@ -160,7 +161,7 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 24px;
+    gap: 36px;
 }
 
 .nav-menu li {
@@ -168,11 +169,11 @@ body {
 }
 
 .nav-menu a {
-    color: #666;
+    color: #444;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 6px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 4px;
     transition: color 0.3s;
     position: relative;
 }
@@ -379,7 +380,7 @@ body {
 .edu-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .edu-item {
@@ -442,14 +443,15 @@ body {
 
 .edu-time {
     flex-shrink: 0;
-    width: 100px;
-    font-size: 0.8rem;
+    width: 130px;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #2563eb;
-    padding: 6px 12px;
+    padding: 8px 14px;
     background: rgba(37, 99, 235, 0.08);
     border-radius: 8px;
     text-align: center;
+    white-space: nowrap;
 }
 
 .edu-detail {
@@ -487,7 +489,7 @@ body {
 .research-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 
 .research-card {
@@ -681,9 +683,6 @@ body {
 }
 
 .award-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     border: 1px solid #e5e7eb;
@@ -697,21 +696,23 @@ body {
     box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
 }
 
-.award-year {
-    flex-shrink: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-    padding: 6px 14px;
-    border-radius: 8px;
+.award-item p {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.7;
+    word-wrap: break-word;
 }
 
-.award-text {
-    font-size: 0.9rem;
+.award-item .award-year {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+.award-item .award-text {
     color: #333;
-    font-weight: 500;
-    line-height: 1.6;
 }
 
 .patent-list {
